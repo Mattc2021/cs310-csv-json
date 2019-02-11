@@ -140,10 +140,33 @@ public class Converter {
             StringWriter writer = new StringWriter();
             CSVWriter csvWriter = new CSVWriter(writer, ',', '"', '\n');
             
-            // INSERT YOUR CODE HERE
+            String[] sections = jsonString.split("],\"");
+            String[] rowHeaders = sections[0].split(":\\[")[1].replaceAll("\"", "").split(",");
+                        
+            String[] colHeaders = sections[2].split(":")[1].replaceAll("\"", "").replace("[", "").replace("]", "").replace("}", "").split(",");
+                        
+            String[] beforeData = sections[1].split(":\\[")[1].split("],\\[");
+            String[][] data = new String[beforeData.length][colHeaders.length];
+                        
+            for (int i = 0; i < data.length; i++) {
+                for (int j = 0; j < colHeaders.length; j++) {
+                    if (j == 0) {
+                        data[i][j] = rowHeaders[i];
+                    } else {
+                        data[i][j] = beforeData[i].split(",")[j - 1].replace("[", "").replace("]", "");
+                    }
+                }
+            }
+                        
+            csvWriter.writeNext(colHeaders);
+            for (String[] i : data) {
+                csvWriter.writeNext(i);
+            }
+                        
+            results = writer.toString();
             
         }
-        
+               
         catch(Exception e) { return e.toString(); }
         
         return results.trim();
