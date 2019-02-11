@@ -66,10 +66,65 @@ public class Converter {
             CSVReader reader = new CSVReader(new StringReader(csvString));
             List<String[]> full = reader.readAll();
             Iterator<String[]> iterator = full.iterator();
-            
+            String[] colHeaders = iterator.next();
             // INSERT YOUR CODE HERE
             
-        }        
+            JSONArray changeRecord = new JSONArray();
+            LinkedHashMap<String, JSONArray> jsonData = new LinkedHashMap<>();
+            
+            String[] record;
+            String[] rowHeaders = new String[full.size() - 1];
+            int[][] data = new int[full.size() - 1][colHeaders.length - 1];
+            int counter = 0;
+            int counter2= 0;
+            
+            while (iterator.hasNext()){
+                record= iterator.next();
+                for (int i = 0; i <colHeaders.length; i++){
+                    if(i ==0){
+                        rowHeaders[counter] = record[i];
+                        counter++;
+                    }
+                    else{
+                        data[counter2][i - 1] = Integer.parseInt(record[i]);
+                    }
+                }
+                counter2++;
+            }
+            
+            counter = 0;
+            for(String i : rowHeaders){
+                changeRecord.add(counter, i);
+                counter++;
+            }
+            jsonData.put("rowHeaders", changeRecord);
+            
+            changeRecord = new JSONArray();
+            JSONArray changeRecord2 = new JSONArray();
+            
+            for (int i = 0; i < data.length; i++) {
+                for (int j = 0; j < data[i].length; j++) {
+                    changeRecord2.add(j, data[i][j]);
+                }
+                changeRecord.add(i, changeRecord2);
+                changeRecord2 = new JSONArray();
+            }
+            
+            jsonData.put("data", changeRecord);
+            
+            changeRecord = new JSONArray();
+            counter = 0;
+            
+            for (String i : colHeaders) {
+                changeRecord.add(counter, i);
+                counter++;
+            }
+            
+            jsonData.put("colHeaders", changeRecord);
+            
+            results = JSONValue.toJSONString(jsonData);
+        }
+                
         catch(Exception e) { return e.toString(); }
         
         return results.trim();
