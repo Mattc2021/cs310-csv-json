@@ -152,7 +152,8 @@ public class Converter {
                 for (int j = 0; j < colHeaders.length; j++) {
                     if (j == 0) {
                         data[i][j] = rowHeaders[i];
-                    } else {
+                    } 
+                    else {
                         data[i][j] = beforeData[i].split(",")[j - 1].replace("[", "").replace("]", "");
                     }
                 }
