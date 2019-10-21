@@ -5,6 +5,7 @@ Introduction
   delimiter used for reading data is set by the file, using “File.separator.” The purpose of this program is file-type conversion.
 
 Main
+
     Because of the error-prone nature of file modifications, the main function is encased in a try statement that logs the error as severe   if execution fails. Starting chronologically in the code, a ClassLoader is initialized to a variable to assist in retrieving files from  the resources folder. A StringBuilder is also initialized to a variable to assist in building the CSV data structure from the files. An additional try statement surrounds a BufferedReader, using an InputStreamReader, using the aforementioned ClassLoader, and finally using  the resource folder and file separator to read the data from the correct file and store it in a BufferedReader variable. Each line of  the reader is then iterated through and appended to the StringBuilder (with a new line appended after every line of the reader). If the code within the try statement fails to execute, the thrown exception’s StackTrace is printed. With all the data in a 
 StringBuilder, it is converted to a string and trimmed of any new lines or white space at the end. The same, exact method is used 
 for getting JSON data, but the variables that contain CSV are instead named JSON. Now with all CSV and JSON data read, they are
@@ -13,6 +14,7 @@ signs (to mark a barrier) and another new line. Next, the converter class is cal
 screen. Finally, just as before, those steps are repeated for the JSON data -- “CONVERSION RESULTS (JSON to CSV)” being its header.
 
 Converter
+
     	While the steps for CSV and JSON files have been similar or identical to this point, that will no longer be true. Though three
 functions exist, only two (csvToJson and jsonToCsv) are relevant as the third (getJsonData) is used for a separate test file
 involving MySQL, but it is never called in the program. Try statements surround both functions with a blank string declared to a 
@@ -65,6 +67,7 @@ Sample Output
 	"111241","973","236","237","500"
 	
 Graphical Possiblities
+
 	With little code neccessary, a graphical version of this application takes little effort. First, a class ending a JFrame must be 
   created and initialized. Next, two labels are created to represent the output of both conversions. A text field is also created for
   the user to enter the file path, and both are added to a JPanel which is added to the JFrame. Once the user clicks the submit button,
